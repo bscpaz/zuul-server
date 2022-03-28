@@ -21,3 +21,22 @@ As Zuul is deprecated, you cannot choose it anymore from Spring Boot dependencie
   <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 </dependency>
 ```
+
+Change the main class as following:
+
+```java
+package br.com.bscpaz.microservice.zull;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+
+@SpringBootApplication
+@EnableZuulProxy
+public class ZuulServerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ZuulServerApplication.class, args);
+	}
+}
+```
