@@ -56,7 +56,7 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
 
-#Expõe as rotas que encontrou no Eureka      
+#Expose routes found in Eureka
 management:
   endpoints:
     web:
@@ -64,7 +64,7 @@ management:
         include:
         - "routes"
         
-#Repassa o token no cabeçalho para os próximos serviços.         
+#Deliver token in the header for other microservices.
 zuul:
   sensitive-headers:
   - Cookie, Authorization   
