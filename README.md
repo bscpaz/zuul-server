@@ -40,3 +40,32 @@ public class ZuulServerApplication {
 	}
 }
 ```
+Then, configure application.yml file as following:
+```
+server:
+  port: ${ENV_PORT:8181}
+
+spring:
+  application:
+    name: ${ENV_HOST:zuul-server}
+    
+eureka:  
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
+
+#Expõe as rotas que encontrou no Eureka      
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "routes"
+        
+#Repassa o token no cabeçalho para os próximos serviços.         
+zuul:
+  sensitive-headers:
+  - Cookie, Authorization   
+```
