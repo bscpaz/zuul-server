@@ -21,51 +21,26 @@ As Zuul is deprecated, you cannot choose it anymore from Spring Boot dependencie
   <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 </dependency>
 ```
+### Docker-Compose example
 
-Change the main class as following:
+##### Add this service into a docker-compose.yaml at one level above the "gateway" folder
+```console
+(...)
 
-```java
-package br.com.bscpaz.microservice.zull;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-
-@SpringBootApplication
-@EnableZuulProxy
-public class ZuulServerApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ZuulServerApplication.class, args);
-	}
-}
-```
-Then, configure application.yml file as following:
-```
-server:
-  port: ${ENV_PORT:8181}
-
-spring:
-  application:
-    name: ${ENV_HOST:zuul-server}
-    
-eureka:  
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
-
-#Expose routes found in Eureka
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-        - "routes"
-        
-#Deliver token in the header for other microservices.
-zuul:
-  sensitive-headers:
-  - Cookie, Authorization   
+  gateway:
+    build:
+      context: /home/bscpaz/projects/gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - '8180:8180'
+      - '8181:8181'
+    environment:
+      - ENV_PORT=8181
+      - ENV_HOST=gateway
+      - EUREKA_SERVER_DEFAULT_ZONE=http://discovery:8761/eureka/
+      - EUREKA_INSTANCE_PREFERIPADDRESS=true
+      - GATEWAY_ACTIVE_PROFILES=dev
+    depends_on:
+      - discovery
 ```
