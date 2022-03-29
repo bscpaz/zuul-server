@@ -1,5 +1,5 @@
 <h1 align="center">Zuul Server</h1>
-<p align="center">This page has just a exeample of how to setup a Zuul Server.</p>
+<p align="center">This page shows a exeample of how to setup a Zuul Server.</p>
 
 ### Configuration
 
