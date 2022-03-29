@@ -1,0 +1,24 @@
+server:
+  port: ${ENV_PORT:8181}
+
+spring:
+  application:
+    name: ${ENV_HOST:zuul-server}
+    
+eureka:  
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "routes"
+        
+zuul:
+  sensitive-headers:
+  - Cookie, Authorization
